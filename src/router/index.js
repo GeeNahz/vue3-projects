@@ -7,7 +7,11 @@ const routes = [
   {
     path: "/",
     name: "EventList",
-    component: EventList
+    component: EventList,
+    props: route => ({ page: parseInt(route.query.page) || 1 }) // accepts this prop (page) and passes the prop to the EventList component
+    // Its like a back and forth thing.
+    // it accepts page prop from where it is being called 
+    // and passes it to its own component (EventList)
   },
   {
     path: "/event/:id",
