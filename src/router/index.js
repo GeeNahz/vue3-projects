@@ -17,7 +17,7 @@ const routes = [
     // and passes it to its own component (Event)
   },
   {
-    path: "/event/:id",
+    path: "/events/:id",
     name: "EventLayout",
     props: true,
     component: EventLayout,
@@ -38,6 +38,12 @@ const routes = [
         component: EventEdit
       },
     ]
+  },
+  {
+    path: '/event/:afterEvent(.*)', // changing :id to :afterEvent(.*) will enable it to
+    redirect: to => {  // capture nested routes in the redirect
+      return { path: '/events/' + to.params.afterEvent }
+    }
   },
   {
     path: "/about",
