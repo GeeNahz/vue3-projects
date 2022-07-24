@@ -85,6 +85,16 @@
       "date": "Sept. 4, 2025",
       "time": "3:00",
       "organizer": "Nero Aqua"
+    },
+    {
+      "id": "8863d800-0073-4591-bbe7-07d2abad300a",
+      "category": "education",
+      "title": "Learning Luncheon",
+      "description": "A new event",
+      "location": "Jos",
+      "date": "Sept. 15, 2028",
+      "time": "12:00",
+      "organizer": "Nero Aqua"
     }
   ]
 }

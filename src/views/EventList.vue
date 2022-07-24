@@ -39,6 +39,27 @@ export default {
       totalEvents: 0,
     }
   },
+  // NOTE:- expected approach
+  /**
+   * created() {
+   *  this.$store.dispatch('fetchEvent')
+   * }
+   * 
+   * keep in mind the following approach:
+   * beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.$store.dispatch(ACTION_NAME, vm.PROP_NAME)
+            .then((result) => {
+              // todo handle
+              next()
+            })
+            .catch(() => {
+              // todo handle
+              next(ERROR_PAGE_PATH)
+            })
+      })
+    }
+   */
   beforeRouteEnter(routeTo, routeFrom, next) {
     EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
       .then((response) => {
@@ -67,6 +88,11 @@ export default {
 
       return this.page < totalPages
     },
+    /**
+     * events() {
+     *  return this.$store.state.events
+     * }
+     */
   },
 }
 </script>
