@@ -13,62 +13,62 @@ import GStore from '@/store'
 
 const routes = [
   {
-    path: "/",
-    name: "EventList",
+    path: '/',
+    name: 'EventList',
     component: EventList,
     props: route => ({ page: parseInt(route.query.page) || 1 }) // accepts this prop (page) and passes the prop to the EventList component
-    // Its like a back and forth thing.
-    // it accepts page prop from where it is being called 
-    // and passes it to its own component (Event)
+    // its like a back and forth thing it accepts page prop from where it is being called and passes it to its own component (Event)
   },
   {
-    path: "/events/:id",
-    name: "EventLayout",
+    path: '/events/:id',
+    name: 'EventLayout',
     props: true,
     component: EventLayout,
     beforeEnter: to => {
       return EventService.getEvent(to.params.id)
-        .then((response) => {
+        .then(response => {
           GStore.event = response.data
         })
-        .catch((error) => {
+        .catch(error => {
           if (error.response && error.response.status === 404) {
             return {
               name: '404Resource',
-              params: { resource: 'event' },
+              params: { resource: 'event' }
             }
           } else {
             return { name: 'NetworkError' }
           }
         })
     },
-    children: [ // nested routes
+    // nested routes
+    children: [
       {
-        path: "",
-        name: "EventDetails",
+        path: '',
+        name: 'EventDetails',
         component: EventDetails
       },
       {
-        path: "register",
-        name: "EventRegister",
+        path: 'register',
+        name: 'EventRegister',
         component: EventRegister
       },
       {
-        path: "edit",
-        name: "EventEdit",
+        path: 'edit',
+        name: 'EventEdit',
         component: EventEdit
-      },
+      }
     ]
   },
   {
     path: '/event/:afterEvent(.*)', // changing :id to :afterEvent(.*) will enable it to
-    redirect: to => {  // capture nested routes in the redirect
+    redirect: to => {
+      // capture nested routes in the redirect
       return { path: '/events/' + to.params.afterEvent }
     }
   },
   {
-    path: "/about",
-    name: "About",
+    path: '/about',
+    name: 'About',
     component: About
   },
   {
@@ -87,12 +87,19 @@ const routes = [
     name: 'NetworkError',
     component: NetworkError
   }
-];
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-});
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
+})
 
 router.beforeEach(() => {
   NProgress.start()
@@ -102,4 +109,4 @@ router.afterEach(() => {
   NProgress.done()
 })
 
-export default router;
+export default router
