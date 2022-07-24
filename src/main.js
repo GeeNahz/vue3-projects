@@ -1,13 +1,14 @@
-import { createApp, reactive } from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+// import store from './store'
+import GStore from './store'
 import 'nprogress/nprogress.css'
 
-const GStore = reactive({ flashMessage: '' }) // global reactive state
+
 
 createApp(App)
-  .use(store)
+  // .use(store)
   .use(router)
   .provide('GStore', GStore) // provides it for other components to make use of
   .mount('#app')
