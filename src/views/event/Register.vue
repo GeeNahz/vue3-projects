@@ -20,9 +20,9 @@ export default {
       }, 3000)
 
       this.$router.push({
-        name: 'EventDetails',
+        name: 'EventDetails'
       })
-    },
-  },
+    }
+  }
 }
 </script>

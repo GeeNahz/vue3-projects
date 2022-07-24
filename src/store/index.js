@@ -1,11 +1,18 @@
 import { reactive } from "vue"
-// import { createStore } from 'vuex'
+import { createStore } from 'vuex'
 
-// export default createStore({
-//   state: {},
-//   mutations: {},
-//   actions: {},
-//   modules: {}
-// })
+export default createStore({
+    state: {
+        user: 'Nero Aqua',
+        events: []
+    },
+    mutations: {
+        ADD_EVENT(state, event) {
+            state.events.push(event)
+        }
+    },
+    actions: {},
+    modules: {}
+})
 
-export default reactive({ flashMessage: '', event: null }) // global reactive state
+export const GStore = reactive({ flashMessage: '', event: null }) // global reactive state
