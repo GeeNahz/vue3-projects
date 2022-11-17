@@ -1,0 +1,53 @@
+$screen-sizes: (
+    'mobile-width': 414px,
+    'tablet-width': 1280px,
+    'desktop-width': 1920px
+);
+$colors: (
+    'primary': #fefefe,
+    'secondary': #14213d,
+    'accent': #fca311,
+    'text-primary': #1f1f1f,
+    'text-secondary': #e5e5e5,
+    'text-hover': #243b6d,
+    'white': #fff,
+    'black': #303030
+);
+$font-sizes: (
+  'xx-small': 9px,
+  'x-small': 10px,
+  'small': 13px,
+  'medium': 16px,
+  'large': 18px,
+  'x-large': 24px,
+  'xx-large': 32px
+);
+$font-weights: (
+    'light': 200,
+    'semilight': 300,
+    'normal': 400,
+    'medium': 500,
+    'semibold': 600,
+    'bold': 700
+);
+
+@function color($colorName) {
+    @if($colorName) {
+        @return map-get($colors, $colorName);
+    } @else {
+        @warn "No color was provided";
+        @return map-get($colors, 'primary');
+    }
+}
+
+@function font-size($size) {
+    @return map-get($font-sizes, $size);
+}
+
+@function font-weight($weight) {
+    @return map-get($font-weights, $weight);
+}
+
+@function screen-size($size) {
+    @return map-get($screen-sizes, $size);
+}

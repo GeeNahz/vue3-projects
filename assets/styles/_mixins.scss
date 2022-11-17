@@ -1,0 +1,136 @@
+@mixin container {
+    width: 100%;
+    height: 100%;
+    padding: 0 2rem;
+    background-color: color(primary);
+    color: color(text-primary);
+    font-family: 'Rubik', sans-serif;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    @content;
+}
+
+@mixin fill-parent() {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin hover-active-states() {
+    &:hover, &:active, &:focus {
+        @content;
+    }
+}
+
+@mixin center-vertically() {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin center-horizontally() {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@mixin center-self() {
+    @include center-vertically();
+    @include center-horizontally();
+    transform: translateX(-50%) translateY(-50%);
+    @content;
+}
+
+@mixin center-items() {
+    display: grid;
+    place-items: center;
+    place-content: center;
+
+    @content;
+}
+
+@mixin unstyled-list() {
+    list-style: none;
+}
+
+@mixin transition-ease($time: 0.3s, $ease: ease-out) {
+    transition: all $time $ease;
+}
+
+@mixin responsive($screen-width) {
+    @media screen and (max-width: #{screen-size($screen-width)}) {
+        @content;
+    }
+}
+
+@mixin button-fill() {
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    color: color(primary);
+    background-color: color(secondary);
+    border: none;
+    outline: none;
+    font-weight: font-weight(semibold);
+    font-size: smaller;
+
+    @include transition-ease();
+    @include hover-active-states() {
+        background-color: color(text-hover);
+    }
+
+    @content;
+}
+
+@mixin button-outline() {
+    @include button-fill() {
+        color: color(secondary);
+        background-color: transparent;
+        border: 0.12rem solid color(secondary);
+    }
+
+    @include transition-ease();
+    @include hover-active-states() {
+        color: color(text-primary);
+        border-color: color(text-primary);
+        background-color: transparent;
+    }
+
+    @content;
+}
+
+@mixin fade-in-out {
+    .v-enter-from,
+    .v-leave-to {
+        opacity: 0;
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+        @include transition-ease(0.2s, cubic-bezier(1, 0.5, 0.8, 1));
+    }
+}
+
+@mixin slide-in-out {
+    .v-enter-from,
+    .v-leave-to {
+        transform: translateY(-20px);
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+        @include transition-ease($time: 0.4s);
+    }
+}
+
+@mixin slide-fade {
+    @include fade-in-out();
+    @include slide-in-out();
+}
