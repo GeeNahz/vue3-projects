@@ -90,7 +90,7 @@ const handleSearchSubmit = () => {
   background: #fff;
   padding: 12px 56px;
   margin: 0;
-  z-index: 1;
+  z-index: 2;
 
   & a {
     text-decoration: none;
