@@ -2,10 +2,11 @@
   <div @click.self="close" class="modal__bg__blur">
     <div class="modal__container">
       <div class="modal__title">
-        <h2>
+        <h2 class="ui medium header">
           <slot name="title">My modal</slot>
         </h2>
       </div>
+      <div class="ui clearing divider"></div>
       <div class="modal__body">
         <slot name="body"></slot>
       </div>
@@ -39,7 +40,7 @@ const close = () => emit('close')
   & .modal__container {
     width: 25rem;
     background-color: color('white');
-    border-radius: 0.6rem;
+    border-radius: 0.2rem;
     padding: 1rem;
   
     @include center-self {
@@ -48,7 +49,6 @@ const close = () => emit('close')
     }
   }
   & .modal__title {
-    margin-bottom: 1rem;
     text-align: center;
   
     & h2 {
