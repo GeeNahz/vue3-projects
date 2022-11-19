@@ -5,7 +5,8 @@ import { storeToRefs } from 'pinia'
 import { initializeApp } from "firebase/app"
 
 // TODO: Add SDKs for Firebase products that you want to use
-import { getFirestore, collection, addDoc, setDoc, getDoc, getDocs, doc, query, where, deleteDoc, onSnapshot } from "firebase/firestore"
+import { getFirestore, collection, setDoc, getDoc, getDocs, doc, query, where, deleteDoc } from "firebase/firestore"
+import { getStorage, ref, uploadString, getDownloadURL, getMetadata } from "firebase/storage";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,67 +24,38 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app)
+// Initialize Cloud Firestore and get a reference to the service
+const storage = getStorage(app)
 
+export const saveFile = async (fullPath, file) => {
+  // Create a storage reference from our storage service
+  const storageRef = ref(storage, fullPath)
+  const snapshot = await uploadString(storageRef, file, "data_url")
 
-
-
-
-export const readDoc = async (collectionName, id) => {
-  try {
-    const docRef = doc(db, collectionName, id)
-    const querySnapshot = await getDoc(docRef)
-
-    console.log(querySnapshot.data())
-    return querySnapshot.data()
-  } catch (error) {
-    console.log(error)
-    return error
+  if(snapshot) {
+    const downloadUrl = await getDownloadURL(snapshot.ref)
+    const metadata = await getMetadata(storageRef)
+    return { snapshot, downloadUrl, metadata }
   }
 }
 
+export const uploadFile = async (file) => {
+  return await new Promise(function (resolve, reject) {
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = async (e) => {
+      const result = reader.result
 
+      const { snapshot, downloadUrl, metadata } = await saveFile(`images/${file.name}`, result)
 
-// export const tasksSnapShot = () => {
-//   // store reference
-//   const store = useBoardStore()
-//   const { tasks } = storeToRefs(store)
-  
-//   const colRef = collection(db, 'tasks')
-//   let tasksList = new Array()
-//   onSnapshot(colRef, querySnapshot => {
-//     querySnapshot.forEach(doc => {
-//       tasksList.push({
-//         id: doc.id,
-//         ...doc.data()
-//       })
-//     })
-
-//     tasks.value = tasksList
-//   })
-
-//   return tasksList
-// }
-
-// export const boardsSnapShot = () => {
-//   // store reference
-//   const store = useBoardStore()
-//   const { boards } = storeToRefs(store)
-  
-//   const colRef = collection(db, 'boards')
-//   let boardsList = new Array()
-//   onSnapshot(colRef, querySnapshot => {
-//     querySnapshot.forEach(doc => {
-//       boardsList.push({
-//         ...doc.data(),
-//         id: doc.id
-//       })
-//     })
-
-//     boards.value = boardsList
-//   })
-
-//   return boardsList
-// }
+      if(snapshot) {
+        resolve({ snapshot, downloadUrl, metadata })
+      } else {
+        reject()
+      }
+    }
+  })
+}
 
 export const saveDoc = async (collectionName, data) => {
   const colRef = collection(db, collectionName)
