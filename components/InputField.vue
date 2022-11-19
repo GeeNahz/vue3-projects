@@ -7,7 +7,8 @@
         :placeholder="placeholder"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-        :aria-invalid="invalidFild"
+        :aria-invalid="invalidField"
+        :invalid="invalidField"
       />
     </fieldset>
   </div>
@@ -35,7 +36,7 @@ defineProps({
   }
 })
 
-const invalidFild = ref(false)
+const invalidField = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -44,7 +45,8 @@ const invalidFild = ref(false)
   width: 100%;
 
   & .input__wrapper {
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
+    border: 0.4px solid #e8e8e8;
     overflow: hidden;
     background-color: #fff;
     width: 100%;
@@ -52,13 +54,13 @@ const invalidFild = ref(false)
     & legend {
       font-size: small;
       padding: 0 0.2rem;
-      margin-left: 0.2rem;
+      // margin-left: 0.2rem;
     }
 
     & input {
       outline: none;
       border: none;
-      padding: 0 0.3rem 0.5rem 0.3rem;
+      // padding: 0 0.3rem 0.5rem 0.3rem;
       width: 100%;
     }
   }
