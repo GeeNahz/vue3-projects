@@ -1,6 +1,6 @@
 <template>
   <div class="board__container">
-    <menu-button @edit="toggleEditBoard" />
+    <menu-button class="menu__btn" @edit="toggleEditBoard" />
     <div v-if="editBoard">
       <modal-board-edit :data="editedBoardDetails" @close="toggleEditBoard" />
     </div>
@@ -41,6 +41,20 @@ const toggleEditBoard = () => {
     width: 16rem;
     height: 10rem;
     border-radius: 0.3rem;
+
+    & .menu__btn {
+      height: min-content;
+      width: min-content;
+      position: absolute;
+      right: 1rem;
+      top: -4px;
+      border-radius: 0.2rem;
+      background-color: rgba(#efefef, 0.8);
+
+      @include hover-active-states {
+        background-color: rgba(#efefef, 1);
+      }
+    }
 
     & .menu__container {
       position: absolute;
