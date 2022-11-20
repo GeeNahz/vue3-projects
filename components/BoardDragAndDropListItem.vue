@@ -81,7 +81,7 @@ const handleTaskUpdate = (taskId) => {
   font-size: small;
   height: max-content;
   display: flex;
-  gap: 1rem;
+  gap: 0.7rem;
   justify-content: space-between;
 
   &.editing {
