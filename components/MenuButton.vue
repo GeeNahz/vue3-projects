@@ -1,14 +1,13 @@
 <template>
   <div class="menu__container">
-    <div
-      @blur="toggleMenuOptions"
+    <button
+      @blur="blurToggle"
       @click="toggleMenuOptions"
-      class="menu__btn"
     >
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+      <div class="menu__btn">
+        <i class="ellipsis vertical icon"></i>
+      </div>
+    </button>
     <ul v-if="showMenuOptions" class="menu__container__menu__list">
       <li @click="emitEdit">Edit</li>
       <li @click="emitDelete">Delete</li>
@@ -28,15 +27,16 @@ const showMenuOptions = ref(false)
 const toggleMenuOptions = () => {
   showMenuOptions.value = !showMenuOptions.value
 }
+const blurToggle = () => {
+  setTimeout(() => showMenuOptions.value = !showMenuOptions.value, 100)
+}
 
 const emitEdit = () => {
   emit('edit')
-  toggleMenuOptions()
 }
 
 const emitDelete = () => {
   emit('delete')
-  toggleMenuOptions()
 }
 </script>
 
@@ -46,33 +46,43 @@ const emitDelete = () => {
 .menu__container {
   position: relative;
   z-index: 1;
+  padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+  height: fit-content;
+  width: fit-content;
 
-  & .menu__btn {
-    display: flex;
-    gap: 0.2rem;
-    background-color: color('text-secondary');
-    width: 23px;
-    height: min-content;
-    padding: 5px 3px;
-    border-radius: 0.2rem;
+  @include transition-ease();
+  @include hover-active-states {
+    cursor: pointer;
+  }
+
+  & button {
+    outline: none;
+    background: none;
+    border: none;
 
     @include hover-active-states {
       cursor: pointer;
     }
 
-    & span {
-      height: 3px;
-      width: 3px;
-      border-radius: 999px;
-      background-color: #8a8a8a;
+    & .menu__btn {
+      width: 1rem;
+      // border: 1px solid rgba(color('text-hover'), 0.3);
+      // border-radius: 0.2rem;
+      // background-color: color('primary');
+      // box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
+  
+      & .ellipsis {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
   #{&}__menu__list {
     position: absolute;
-    top: 0;
+    top: 0.2rem;
     left: 1.5rem;
-    background-color: rgba(color('text-secondary'), 0.8);
+    background-color: rgba(color('text-secondary'), 1);
     border-radius: 0.2rem;
 
     @include unstyled-list();
@@ -86,5 +96,6 @@ const emitDelete = () => {
       }
     }
   }
+  
 }
 </style>
