@@ -66,10 +66,6 @@ const emitDelete = () => {
 
     & .menu__btn {
       width: 1rem;
-      // border: 1px solid rgba(color('text-hover'), 0.3);
-      // border-radius: 0.2rem;
-      // background-color: color('primary');
-      // box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
   
       & .ellipsis {
         width: 100%;
@@ -81,7 +77,7 @@ const emitDelete = () => {
   #{&}__menu__list {
     position: absolute;
     top: 0.2rem;
-    left: 1.5rem;
+    left: 2rem;
     background-color: rgba(color('text-secondary'), 1);
     border-radius: 0.2rem;
 
