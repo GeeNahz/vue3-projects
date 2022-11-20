@@ -60,20 +60,10 @@ const toggleDisable = () => {
     }
   }
 
-  // & .icon {
-  //   background-color: color(secondary);
-  //   padding: 0.4rem;
-  //   border-radius: 0.2rem;
-
-  //   @include center-items;
-  //   @include transition-ease;
-  //   @include hover-active-states {
-  //     background-color: color(text-primary);
-  //   }
-  //   & svg {
-  //     width: 1rem;
-  //     fill: #fff;
-  //   }
-  // }
+  & .icon {
+    @include hover-active-states {
+      cursor: pointer;
+    }
+  }
 }
 </style>
