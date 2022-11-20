@@ -86,6 +86,7 @@ const handleTaskUpdate = (taskId) => {
 
   &.editing {
     background-color: #fafafa;
+    outline: color('text-hover') solid 1px;
   }
 
   & p {
